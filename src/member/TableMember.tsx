@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Actions from "../common/ActionButtons";
 import { Button, Col, Row } from "react-bootstrap";
 import { Member } from "../models/Member";
-import { deleteMember, getMembers } from "./ApiService";
+import { deleteMember, getMembers } from "./MemberAPIClient";
 import AddMemberForm from "./CreateMemberModal";
 
 const TableMember =() => {

@@ -1,5 +1,5 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { postCard } from "./ApiService";
+import { postCard } from "./CardAPIClient";
 import { useEffect, useState } from "react";
 import { Card } from "../models/Card";
 

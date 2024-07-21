@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Card } from "../models/Card";
-import { deleteCard, getCards } from "./ApiService";
+import { deleteCard, getCards } from "./CardAPIClient";
 import Actions from "../common/ActionButtons";
 import { Button, Col, Row } from "react-bootstrap";
 import AddCardForm from "./CreateCardModal";

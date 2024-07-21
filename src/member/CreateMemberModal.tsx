@@ -1,5 +1,5 @@
 import { Button, Form, Modal } from "react-bootstrap";
-import { postMember } from "./ApiService";
+import { postMember } from "./MemberAPIClient";
 import { useEffect, useState } from "react";
 import { Member } from "../models/Member";
 
