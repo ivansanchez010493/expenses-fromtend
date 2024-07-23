@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Purchase } from "../models/Purchase";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
+import { format } from "date-fns";
 
 interface AddPurchaseFormProperties {
     displayModal: boolean;
@@ -15,7 +16,7 @@ interface AddPurchaseFormProperties {
 
 const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, closeModal, updateTable, initialPurchase, action}) => {
     const [formData, setFormData] = useState<Purchase>({...initialPurchase});
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
     useEffect(() => {
         setFormData({ ...initialPurchase });
@@ -26,13 +27,13 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleDateChange = (date: Date | null) => {
-        setSelectedDate(date);
-    };
-
     const submitPurchase = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+          if(selectedDate){
+            const formattedDate = format(selectedDate, 'dd/MM/yyyy');
+            formData.purchaseDate = formattedDate;
+          }
           const response = postPurchase(formData);
           console.log('Data posted successfully:', response);
           updateTable(await response, action);
@@ -50,10 +51,10 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={submitPurchase}>
-                    <Form.Group controlId="formItem">
-                        <Form.Label>Item</Form.Label>
-                        <Form.Control type="text" placeholder="Item name" 
-                        name="item" value={formData.itemName} onChange={handleChange} required/>
+                    <Form.Group controlId="formItemName" className="mt-3">
+                        <Form.Label>Item name</Form.Label>
+                        <Form.Control type="text" placeholder="Item name"
+                        name="itemName" value={formData.itemName} onChange={handleChange} required />
                     </Form.Group>
                     <Form.Group controlId="formCategory" className="mt-3">
                         <Form.Label>Category</Form.Label>
@@ -63,17 +64,17 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
                     <Form.Group controlId="formAmount" className="mt-3">
                         <Form.Label>Amount</Form.Label>
                         <Form.Control type="number" placeholder="0.0"
-                        name="amount" value={formData.amount} onChange={handleChange} required/>
+                        name="amount" onChange={handleChange} required/>
                     </Form.Group>
                     <Form.Group controlId="formPurchaseDate" className="mt-3">
                         <Form.Label>Purchase Date</Form.Label>
                         <DatePicker
+                            className="form-control"
                             selected={selectedDate}
-                            onChange={handleDateChange}
-                            dateFormat="yyyy/MM/dd"
+                            onChange={(date: Date | null) => setSelectedDate(date)}
+                            dateFormat="dd/MM/yyyy"
+                            required
                         />
-                        {/* <Form.Control type="date" placeholder="example@mail.com"
-                        name="email" value={formData.email} onChange={handleChange} required/> */}
                     </Form.Group>
                     <Button className="btn btn-danger mt-3 mx-1" onClick={closeModal}>
                         Close
