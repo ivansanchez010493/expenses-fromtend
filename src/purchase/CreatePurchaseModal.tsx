@@ -3,6 +3,7 @@ import { postPurchase } from "./PurchaseAPIClient";
 import { useEffect, useState } from "react";
 import { Purchase } from "../models/Purchase";
 import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface AddPurchaseFormProperties {
     displayModal: boolean;
@@ -86,4 +87,4 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
     );
 }
 
-export default AddMemberForm;
+export default AddPurchaseForm;

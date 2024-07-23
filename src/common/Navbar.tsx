@@ -3,6 +3,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Routes, BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Card from '../card/CardPage';
 import Member from '../member/MemberPage';
+import Purchase from '../purchase/PurchasePage';
 
 function Navigation() {
     const [expanded, setExpanded] = useState(false);
@@ -37,8 +38,8 @@ function Navigation() {
             </Navbar>
             <Routes>
                 <Route path='/card' element={<Card />}></Route>
-
                 <Route path='/members' element={<Member />}></Route>
+                <Route path='/purchase' element={<Purchase />}></Route>
             </Routes>
         </Router>
     );
