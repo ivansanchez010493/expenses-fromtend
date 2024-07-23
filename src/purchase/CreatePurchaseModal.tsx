@@ -17,6 +17,7 @@ interface AddPurchaseFormProperties {
 const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, closeModal, updateTable, initialPurchase, action}) => {
     const [formData, setFormData] = useState<Purchase>({...initialPurchase});
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+    const [purchaseAmount, setPurchaseAmount] = useState('0.00');
 
     useEffect(() => {
         setFormData({ ...initialPurchase });
@@ -27,6 +28,13 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
         setFormData({ ...formData, [name]: value });
     };
 
+    const amountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const amount = e.target.value;
+        if (amount === '' || /^\d*\.?\d{0,2}$/.test(amount)) {
+            setPurchaseAmount(amount);
+        }
+    };
+
     const submitPurchase = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -34,6 +42,7 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
             const formattedDate = format(selectedDate, 'dd/MM/yyyy');
             formData.purchaseDate = formattedDate;
           }
+          formData.amount = parseFloat(purchaseAmount);
           const response = postPurchase(formData);
           console.log('Data posted successfully:', response);
           updateTable(await response, action);
@@ -62,9 +71,9 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
                         name="category" value={formData.category} onChange={handleChange} required />
                     </Form.Group>
                     <Form.Group controlId="formAmount" className="mt-3">
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control type="number" placeholder="0.0"
-                        name="amount" onChange={handleChange} required/>
+                        <Form.Label>Amount $</Form.Label>
+                        <Form.Control type="text" placeholder="0.0"
+                        name="amount" onChange={amountChange} required/>
                     </Form.Group>
                     <Form.Group controlId="formPurchaseDate" className="mt-3">
                         <Form.Label>Purchase Date</Form.Label>
