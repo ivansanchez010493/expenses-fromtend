@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { Card } from "../models/Card";
 import { deleteCard, getCards } from "./CardAPIClient";
 import Actions from "../common/ActionButtons";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row, Table } from "react-bootstrap";
 import AddCardForm from "./CreateCardModal";
+import '../common/CommonStyles.css';
 
 const TableCard =() => {
     const initialCard = {bankName: ''};
@@ -63,9 +64,19 @@ const TableCard =() => {
     }, []);
 
     return (
-        <><div className="container mt-4">
-            <h2>Cards</h2>
-            <table className="table table-striped table-bordered text-center">
+        <>
+        <div className="mt-4 container">
+            <Row>
+                <Col>
+                    <h2>Card</h2>
+                </Col>
+                <Col className="text-end">
+                    <Button variant="success" onClick={onClickAdd}>New Card</Button>
+                </Col>
+            </Row>
+        </div>
+        <div className="table-responsive container">
+            <Table hover className="table table-striped table-bordered text-center">
                 <thead className="thead-dark">
                     <tr>
                         <th>ID</th>
@@ -84,13 +95,7 @@ const TableCard =() => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
-
-            <Row>
-                <Col className="text-end">
-                    <Button variant="success" onClick={onClickAdd}>New Card</Button>
-                </Col>
-            </Row>
+            </Table>
         </div>
         <AddCardForm 
             displayModal={show} 

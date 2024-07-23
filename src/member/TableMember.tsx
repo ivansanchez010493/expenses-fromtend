@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Actions from "../common/ActionButtons";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row, Table } from "react-bootstrap";
 import { Member } from "../models/Member";
 import { deleteMember, getMembers } from "./MemberAPIClient";
 import AddMemberForm from "./CreateMemberModal";
+import '../common/CommonStyles.css';
 
 const TableMember =() => {
     const initialMember = {name: '', lastName: '', email: ''};
@@ -63,9 +64,19 @@ const TableMember =() => {
     }, []);
 
     return (
-        <><div className="container mt-4">
-            <h2>Members</h2>
-            <table className="table table-striped table-bordered text-center">
+        <>
+        <div className="mt-4 container">
+            <Row>
+                <Col>
+                    <h2>Members</h2>
+                </Col>
+                <Col className="text-end">
+                    <Button variant="success" onClick={onClickAdd}>New Member</Button>
+                </Col>
+            </Row>
+        </div>
+        <div className="table-responsive container">
+            <Table hover className="table table-striped table-bordered text-center">
                 <thead className="thead-dark">
                     <tr>
                         <th>ID</th>
@@ -86,12 +97,7 @@ const TableMember =() => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
-            <Row>
-                <Col className="text-end">
-                    <Button variant="success" onClick={onClickAdd}>New Member</Button>
-                </Col>
-            </Row>
+            </Table>
         </div>
         <AddMemberForm 
             displayModal={show} 

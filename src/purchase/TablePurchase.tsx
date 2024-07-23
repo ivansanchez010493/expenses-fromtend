@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Actions from "../common/ActionButtons";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row, Table } from "react-bootstrap";
 import { Purchase } from "../models/Purchase";
 import { deletePurchase, getPurchases } from "./PurchaseAPIClient";
 import AddPurchaseForm from "./CreatePurchaseModal";
+import '../common/CommonStyles.css';
 
 const TablePurchase =() => {
     const initialPurchase = {itemName: '', category: '', amount: 0.0, purchaseDate: ''};
@@ -57,16 +58,26 @@ const TablePurchase =() => {
     }, []);
 
     return (
-        <><div className="container mt-4">
-            <h2>Purchases</h2>
-            <table className="table table-striped table-bordered text-center">
+        <>
+        <div className="mt-4 container">
+            <Row>
+                <Col>
+                    <h2>Purchases</h2>
+                </Col>
+                <Col className="text-end">
+                    <Button variant="success" onClick={() => createOrEdit('create')}>New Purchase</Button>
+                </Col>
+            </Row>
+        </div>
+        <div className="table-responsive container">
+            <Table hover className="table table-striped table-bordered text-center">
                 <thead className="thead-dark">
                     <tr>
                         <th>Item</th>
                         <th>Category</th>
                         <th>Amount</th>
                         <th>Date</th>
-                        <th>Paid Off</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,12 +91,7 @@ const TablePurchase =() => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
-            <Row>
-                <Col className="text-end">
-                    <Button variant="success" onClick={() => createOrEdit('create')}>New Purchase</Button>
-                </Col>
-            </Row>
+            </Table>
         </div>
         <AddPurchaseForm 
             displayModal={show} 

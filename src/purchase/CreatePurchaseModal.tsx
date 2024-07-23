@@ -47,6 +47,7 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
           console.log('Data posted successfully:', response);
           updateTable(await response, action);
           setFormData(initialPurchase);
+          setSelectedDate(new Date());
           closeModal();
         } catch (error) {
           console.error('Error posting data:', error);
