@@ -5,7 +5,7 @@ export interface Purchase {
     itemName: string,
     category: string,
     amount: number,
-    purchaseDate?: string,
+    purchaseDate?: Date,
     scheme?: string,
     paymentTerm?: number,
     ìsSplit?: boolean,

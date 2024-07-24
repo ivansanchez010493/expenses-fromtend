@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Purchase } from "../models/Purchase";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 
 interface AddPurchaseFormProperties {
     displayModal: boolean;
@@ -21,7 +21,14 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
 
     useEffect(() => {
         setFormData({ ...initialPurchase });
-      }, [initialPurchase]);
+
+        //Set existed date at edit purchase
+        if(typeof(initialPurchase.purchaseDate) === 'string'){
+            setSelectedDate(parse(initialPurchase.purchaseDate, 'dd/MM/yyyy', new Date()));
+        }else{
+            setSelectedDate(new Date());
+        }
+    }, [initialPurchase]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -40,7 +47,7 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
         try {
           if(selectedDate){
             const formattedDate = format(selectedDate, 'dd/MM/yyyy');
-            formData.purchaseDate = formattedDate;
+            formData.purchaseDate = parse(formattedDate, 'dd/MM/yyyy', new Date());
           }
           formData.amount = parseFloat(purchaseAmount);
           const response = postPurchase(formData);
@@ -72,7 +79,7 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
                         name="category" value={formData.category} onChange={handleChange} required />
                     </Form.Group>
                     <Form.Group controlId="formAmount" className="mt-3">
-                        <Form.Label>Amount $</Form.Label>
+                        <Form.Label>Amount</Form.Label>
                         <Form.Control type="text" placeholder="0.0"
                         name="amount" onChange={amountChange} required/>
                     </Form.Group>
