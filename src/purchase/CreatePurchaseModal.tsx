@@ -45,6 +45,8 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
     const submitPurchase = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+
+          //Set selected date before post purchase
           if(selectedDate){
             const formattedDate = format(selectedDate, 'dd/MM/yyyy');
             formData.purchaseDate = parse(formattedDate, 'dd/MM/yyyy', new Date());

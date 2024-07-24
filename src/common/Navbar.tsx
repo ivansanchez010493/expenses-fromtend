@@ -16,21 +16,13 @@ function Navigation() {
         <Router>
             <Navbar bg="dark" variant="dark" expand="lg">
                 <Container>
-                    <Navbar.Brand>
-                        <Link to="/">Expenses Management</Link>
-                    </Navbar.Brand>
+                    <Navbar.Brand href='/'> Expenses Management </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={toggleMenu} />
                     <Navbar.Collapse id="basic-navbar-nav" className={`${expanded ? 'show' : ''}`}>
                         <Nav className="me-auto">
-                            <Nav.Link>
-                                <Link to="/card">Cards</Link>
-                            </Nav.Link>
-                            <Nav.Link>
-                                <Link to="/members">Members</Link>
-                            </Nav.Link>
-                            <Nav.Link>
-                                <Link to="/purchase">Purchase</Link>
-                            </Nav.Link>
+                            <Nav.Link href='/card'> Card </Nav.Link>
+                            <Nav.Link href='/members'> Members </Nav.Link>
+                            <Nav.Link href='/purchase'> Purchase</Nav.Link>
                             {/* Add more Nav.Link as needed */}
                         </Nav>
                     </Navbar.Collapse>
