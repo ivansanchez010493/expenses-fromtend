@@ -7,7 +7,7 @@ import AddPurchaseForm from "./CreatePurchaseModal";
 import '../common/CommonStyles.css';
 
 const TablePurchase =() => {
-    const initialPurchase = {itemName: '', category: '', amount: 0.0, purchaseDate: new Date()};
+    const initialPurchase = {itemName: '', category: '', amount: '', purchaseDate: new Date()};
     const [purchase, setPurchase] = useState<Purchase>(initialPurchase);
     const [totalSum, setTotalSum] = useState(0);
     const[show, setShow] = useState(false);
@@ -41,7 +41,7 @@ const TablePurchase =() => {
             setPurchases([...purchases, purchaseDto]);            
             
             //Update total amount
-            setTotalSum(totalSum + purchaseDto.amount);
+            setTotalSum(totalSum + parseFloat(purchaseDto.amount));
         }
         
         if(action === 'edit'){
@@ -51,7 +51,7 @@ const TablePurchase =() => {
             setPurchases(updatedPurchase);
 
             //Update total amount
-            setTotalSum(updatedPurchase.reduce((acc, purchase) => acc + purchase.amount, 0));
+            setTotalSum(updatedPurchase.reduce((acc, purchase) => acc + parseFloat(purchase.amount), 0));
             console.log('New Sum: ' + totalSum);
         }
     };
@@ -63,7 +63,7 @@ const TablePurchase =() => {
             try {
                 const purchaseData = await getPurchases();
                 setPurchases(purchaseData);
-                setTotalSum(purchaseData.reduce((acc, purchase) => acc + purchase.amount, 0));
+                setTotalSum(purchaseData.reduce((acc, purchase) => acc + parseFloat(purchase.amount), 0));
             } catch (error) {
                 console.error('Error fetching purchases:', error);
             }
@@ -100,7 +100,7 @@ const TablePurchase =() => {
                             <tr key={purchase.purchaseId}>
                                 <td>{purchase.itemName}</td>
                                 <td>{purchase.category}</td>
-                                <td>${purchase.amount.toFixed(2)}</td>
+                                <td>${parseFloat(purchase.amount).toFixed(2)}</td>
                                 <td>{purchase.purchaseDate?.toString()}</td>
                                 <td>{<Actions onClickEdit={() => createOrEdit('edit', purchase)} onClickRemove={() => onClickRemove(purchase)}/>}</td>
                             </tr>

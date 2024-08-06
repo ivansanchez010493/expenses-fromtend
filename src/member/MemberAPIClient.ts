@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Member } from '../models/Member';
 
-const API_URL = 'http://localhost:8080/member';
+const API_URL = 'http://api:8080/member';
 
 export const getMembers = async (): Promise<Member[]> => {
     try {

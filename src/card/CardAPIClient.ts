@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Card } from '../models/Card';
 
-const API_URL = 'http://localhost:8080/card';
+const API_URL = 'http://api:8080/card';
 
 export const getCards = async (): Promise<Card[]> => {
     try {

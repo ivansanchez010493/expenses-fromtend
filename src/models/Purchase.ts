@@ -4,7 +4,7 @@ export interface Purchase {
     purchaseId?: number,
     itemName: string,
     category: string,
-    amount: number,
+    amount: string,
     purchaseDate?: Date,
     scheme?: string,
     paymentTerm?: number,

@@ -17,7 +17,7 @@ interface AddPurchaseFormProperties {
 const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, closeModal, updateTable, initialPurchase, action}) => {
     const [formData, setFormData] = useState<Purchase>({...initialPurchase});
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-    const [purchaseAmount, setPurchaseAmount] = useState('0.00');
+    const [purchaseAmount, setPurchaseAmount] = useState<string>('');
 
     useEffect(() => {
         setFormData({ ...initialPurchase });
@@ -28,6 +28,8 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
         }else{
             setSelectedDate(new Date());
         }
+        setPurchaseAmount(initialPurchase.amount);
+
     }, [initialPurchase]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +53,7 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
             const formattedDate = format(selectedDate, 'dd/MM/yyyy');
             formData.purchaseDate = parse(formattedDate, 'dd/MM/yyyy', new Date());
           }
-          formData.amount = parseFloat(purchaseAmount);
+          formData.amount = purchaseAmount;
           const response = postPurchase(formData);
           console.log('Data posted successfully:', response);
           updateTable(await response, action);
@@ -82,7 +84,7 @@ const AddPurchaseForm: React.FC<AddPurchaseFormProperties> = ({displayModal, clo
                     </Form.Group>
                     <Form.Group controlId="formAmount" className="mt-3">
                         <Form.Label>Amount</Form.Label>
-                        <Form.Control type="text" placeholder="0.0"
+                        <Form.Control type="text" placeholder="0.0" value={purchaseAmount}
                         name="amount" onChange={amountChange} required/>
                     </Form.Group>
                     <Form.Group controlId="formPurchaseDate" className="mt-3">
