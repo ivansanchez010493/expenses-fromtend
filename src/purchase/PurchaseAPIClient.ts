@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Purchase } from '../models/Purchase';
 
-const API_URL = 'http://api:8080/purchase';
+const API_URL = 'http://localhost:8080/purchase';
 
 export const getPurchases = async (): Promise<Purchase[]> => {
     try {
