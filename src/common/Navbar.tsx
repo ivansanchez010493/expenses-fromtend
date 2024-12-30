@@ -4,6 +4,7 @@ import { Routes, BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Card from '../card/CardPage';
 import Member from '../member/MemberPage';
 import Purchase from '../purchase/PurchasePage';
+import Home from '../home/HomePage';
 
 function Navigation() {
     const [expanded, setExpanded] = useState(false);
@@ -29,6 +30,7 @@ function Navigation() {
                 </Container>
             </Navbar>
             <Routes>
+                <Route path='/' element={<Home />}></Route>
                 <Route path='/card' element={<Card />}></Route>
                 <Route path='/members' element={<Member />}></Route>
                 <Route path='/purchase' element={<Purchase />}></Route>
